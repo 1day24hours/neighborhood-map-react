@@ -1,7 +1,7 @@
 import React, { Component ,Fragment} from 'react';
 import MapContainer from "./MapContainer";
 import SiteHeader from "./SiteHeader";
-// import SiteSearch from "./SiteSearch";
+import SiteSearch from "./SiteSearch";
 //ref: https://www.fullstackreact.com/articles/how-to-write-a-google-maps-react-component/#
 
 import { places } from './data/places';
@@ -31,10 +31,10 @@ class App extends Component {
       <Fragment>
         <SiteHeader />
         <main className='site-content'>
-        {/* <SiteSearch 
+        <SiteSearch 
           places={places}
           onPlaceClick={this.onPlaceClick}
-        /> */}
+        />
         <MapContainer 
           places={places}
           selectedPlace={selectedPlace}

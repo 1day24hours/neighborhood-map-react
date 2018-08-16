@@ -117,7 +117,7 @@ export class MapContainer extends Component {
             >
             {places.map(place => (
                 <Marker 
-                key={place.id}
+                key={place.name}
                 name={place}
                 position={place.location}
                 ref={place.name}
