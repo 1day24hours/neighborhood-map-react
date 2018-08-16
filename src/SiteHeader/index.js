@@ -1,7 +1,7 @@
 import React from 'react';
 import './index.css';
 
-class SiteHeader extends Component {
+class SiteHeader extends React.Component {
     render() {
         return(
             <header className='site-header'>
