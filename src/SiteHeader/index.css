@@ -1,0 +1,11 @@
+.site-header {
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
+    color: #fff;
+    background: black
+}
+
+.site-header h1 {
+    font-size: 24px;
+}
