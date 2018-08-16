@@ -1,5 +1,5 @@
 import React, { Component ,Fragment} from 'react';
-// import MapContainer from "./MapContainer";
+import MapContainer from "./MapContainer";
 import SiteHeader from "./SiteHeader";
 // import SiteSearch from "./SiteSearch";
 
@@ -7,10 +7,10 @@ import { places } from './data/places';
 import './App.css';
 
 class App extends Component {
-  // state = {
-  //   places = [],
-  //   selectedPlace: {}
-  // };
+  state = {
+    places: [],
+    selectedPlace: {}
+  };
 
   componentDidMount(){
     this.setState({
@@ -19,12 +19,15 @@ class App extends Component {
   }
 
   render() {
-    // const { places,selectedPlace } = this.state;
+    const { places,selectedPlace } = this.state;
     return(
       <Fragment>
         <SiteHeader />
         {/* <SiteSearch /> */}
-        {/* <MapContainer /> */}
+        <MapContainer 
+          places={places}
+          selectedPlace={selectedPlace}
+        />
       </Fragment>
     )
   }
