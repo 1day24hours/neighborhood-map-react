@@ -25,6 +25,7 @@ class SiteSearch extends Component {
                         <input 
                             onChange={e => this.handleInput(e.target.value)}
                             type='search'
+                            // name='search'
                             placeholder='Search'
                             aria-label='Search'
                             tabIndex='1'

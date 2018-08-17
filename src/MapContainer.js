@@ -17,9 +17,14 @@ export class MapContainer extends Component {
             fourSquareData: null
         }
     }
-
-    componentWillReceiveProps() {
+    //re-rendering
+    componentWillReceiveProps(nextProps) {
         
+    }
+
+    //fetch apiData when component adding to DOM
+    componentDidMount() {
+
     }
 
     onMarkerClick = (props, marker, e) => {
@@ -54,10 +59,6 @@ export class MapContainer extends Component {
         })
     };
 
-    getMarkerInfo = () => {
-        // trigger foursquare API data
-    }
-
     render() {
         const { places, google } = this.props;
         const { activeMaker, showingInfoWindow, selectedPlace } = this.state;
@@ -91,11 +92,10 @@ export class MapContainer extends Component {
             >
             <div>
                 <h1>{selectedPlace ? selectedPlace.name :''}</h1>
+                {/* <p>{this.state.fourSquareData ? this.state.fourSquareData : 'Loading...'}</p> */}
             </div>
-            
             </InfoWindow>
             </Map>
-
         )
     }
 }

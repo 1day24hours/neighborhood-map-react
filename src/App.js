@@ -1,7 +1,7 @@
 import React, { Component ,Fragment} from 'react';
 import MapContainer from "./MapContainer";
 import SiteHeader from "./SiteHeader";
-// import SiteSearch from "./SiteSearch";
+import SiteSearch from "./SiteSearch";
 //ref: https://www.fullstackreact.com/articles/how-to-write-a-google-maps-react-component/#
 
 import { places } from './data/places';
@@ -28,7 +28,7 @@ class App extends Component {
   handleFilter = query => {
     if (query !== '') {
       let newPlaces = places.filter(place => {
-        return place.name.toLowerCase().indexOf(query.toLowerCase()) !==1;
+        return place.name.toLowerCase().indexOf(query.toLowerCase()) !==-1;
       });
       this.setState({
         places: newPlaces
@@ -46,10 +46,11 @@ class App extends Component {
       <Fragment>
         <SiteHeader />
         <main className='site-content'>
-        {/* <SiteSearch 
+        <SiteSearch 
           places={places}
           onPlaceClick={this.onPlaceClick}
-        /> */}
+          filter={this.handleFilter}
+        />
         <MapContainer 
           places={places}
           selectedPlace={selectedPlace}
