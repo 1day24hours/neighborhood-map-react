@@ -25,6 +25,21 @@ class App extends Component {
     });
   }
 
+  handleFilter = query => {
+    if (query !== '') {
+      let newPlaces = places.filter(place => {
+        return place.name.toLowerCase().indexOf(query.toLowerCase()) !==1;
+      });
+      this.setState({
+        places: newPlaces
+      });
+    } else {
+      this.setState({
+        places
+      });
+    }
+  }
+
   render() {
     const { places,selectedPlace } = this.state;
     return(
@@ -41,7 +56,7 @@ class App extends Component {
         />
         </main>
       </Fragment>
-    )
+    );
   }
 }
 
