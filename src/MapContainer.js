@@ -12,7 +12,7 @@ export class MapContainer extends Component {
         this.state = {
             showingInfoWindow: false,
             activeMaker: {},
-            selectedPlace: {},
+            selectedPlace: null,
             map: null
         }
     }
@@ -24,6 +24,7 @@ export class MapContainer extends Component {
     }
 
     onMarkerClick = (props, marker, e) => {
+        this.animateMarker(marker,props.map)
         this.setState({
             selectedPlace: props,
             activeMaker: marker,
@@ -40,7 +41,13 @@ export class MapContainer extends Component {
         }
     }
 
-  
+  animateMarker = (marker,map) => {
+      map.setCenter(marker.position);
+      marker.setAnimation(this.props.google.maps.Animation.BOUNCE);
+      setTimeout(() => {
+          marker.setAnimation(null);
+      }, 2000);
+  }
 
     mapReady = (props, map) => {
         this.setState({
