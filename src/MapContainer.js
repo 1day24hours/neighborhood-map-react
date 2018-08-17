@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 
-// const foursquare = require('react-foursquare')({
-//     clientID: 'HNWME22DACZBRE3XCHEPDICRSCBQWCN4LSK3FRPO0VHEFFED',
-//     clientSecret: '0DUHNOBRKVA0AW0PHJK4AE40L02UIWEGOOIVWJW3FS1VCAPR'
-// });
+
 
 export class MapContainer extends Component {
     constructor(props){
@@ -14,17 +11,23 @@ export class MapContainer extends Component {
             activeMaker: {},
             selectedPlace: null,
             map: null,
-            fourSquareData: null
+            apiData: null
         }
     }
+
+    const fourSquareData = {
+        clientID: 'HNWME22DACZBRE3XCHEPDICRSCBQWCN4LSK3FRPO0VHEFFED',
+        clientSecret: '0DUHNOBRKVA0AW0PHJK4AE40L02UIWEGOOIVWJW3FS1VCAPR'
+    };
+
     //re-rendering
-    componentWillReceiveProps(nextProps) {
+    // componentWillReceiveProps(nextProps) {
         
-    }
+    // }
 
     //fetch apiData when component adding to DOM
     componentDidMount() {
-
+       
     }
 
     onMarkerClick = (props, marker, e) => {
@@ -92,7 +95,7 @@ export class MapContainer extends Component {
             >
             <div>
                 <h1>{selectedPlace ? selectedPlace.name :''}</h1>
-                {/* <p>{this.state.fourSquareData ? this.state.fourSquareData : 'Loading...'}</p> */}
+                {/* <p>{this.state.apiData ? this.state.apiData : 'Loading...'}</p> */}
             </div>
             </InfoWindow>
             </Map>
