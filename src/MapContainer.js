@@ -6,10 +6,16 @@ const foursquare = require('react-foursquare')({
     clientID: 'HNWME22DACZBRE3XCHEPDICRSCBQWCN4LSK3FRPO0VHEFFED',
     clientSecret: '0DUHNOBRKVA0AW0PHJK4AE40L02UIWEGOOIVWJW3FS1VCAPR'
 });
+// let placeData = props;
+// const ll = placeData.location.lat + ',' + placeData.location.lng;
 
+// const params = {
+//     "ll": ll,
+//     "query": placeData.name
+// };
 const params = {
-    "ll": "-36.798376, 174.73672",
-    
+    "ll": "37.7749,-122.4194",
+    "query": 'Blue Bottle'
 };
 
 export class MapContainer extends Component {
@@ -25,8 +31,9 @@ export class MapContainer extends Component {
         }
     }
 
+
     // re-rendering 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.selectedPlace !== this.props.selectedPlace) {
             const markers = this.refs;//DOM nodes
             const marker = markers[nextProps.selectedPlace.name].marker;
@@ -41,6 +48,7 @@ export class MapContainer extends Component {
 
     //fetch items when component adding to DOM
     componentDidMount() {
+
         foursquare.venues.getVenues(params)
             .then(res => {
                 console.log(res) ;
@@ -51,7 +59,7 @@ export class MapContainer extends Component {
 
     onMarkerClick = (props, marker, e) => {
         this.animateMarker(marker,props.map);
-
+        
         this.setState({
             selectedPlace: props,
             activeMaker: marker,
@@ -89,6 +97,7 @@ export class MapContainer extends Component {
             lat: -36.795293,
             lng: 174.735701
         };
+        
         const zoom = 12;
 
         return (
