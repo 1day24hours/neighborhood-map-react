@@ -9,7 +9,7 @@ const foursquare = require('react-foursquare')({
 
 const params = {
     "ll": "-36.798376, 174.73672",
-    "query": 'Home'
+    
 };
 
 export class MapContainer extends Component {
@@ -20,7 +20,7 @@ export class MapContainer extends Component {
             activeMaker: {},
             selectedPlace: null,
             map: null,
-            items: null,
+            items: []
             // InfoWindowContent:null
         }
     }
@@ -40,24 +40,22 @@ export class MapContainer extends Component {
     }
 
     //fetch items when component adding to DOM
-    // componentDidMount() {
-    //     foursquare.venues.getVenues(selectedPlace)
-    //         .then(res => {
-    //             this.setState({ items: res.response.venues });
-    //         }).catch(error =>console.log('Error',error)
-    //         );
-    // }
+    componentDidMount() {
+        foursquare.venues.getVenues(params)
+            .then(res => {
+                console.log(res) ;
+                this.setState({ items: res.response.venues });
+            }).catch(error =>console.log('Error',error)
+            );
+    }
 
     onMarkerClick = (props, marker, e) => {
         this.animateMarker(marker,props.map);
 
-        foursquare.venues.getVenues(props);
-
         this.setState({
             selectedPlace: props,
             activeMaker: marker,
-            showingInfoWindow: true,
-            items: props
+            showingInfoWindow: true
         });
     }
 
@@ -118,7 +116,9 @@ export class MapContainer extends Component {
             <div>
                 <h1>{selectedPlace ? selectedPlace.name :''}</h1>
                 <p>{this.state.items ? 
-                    this.state.items:
+                    this.state.items.map(item => {
+                        return <div key={item.id}>{[item.name, item.id]}</div> 
+                    }):
                      'Loading...'}</p>
             </div>
             </InfoWindow>
