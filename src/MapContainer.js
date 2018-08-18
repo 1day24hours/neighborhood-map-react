@@ -7,6 +7,11 @@ const foursquare = require('react-foursquare')({
     clientSecret: '0DUHNOBRKVA0AW0PHJK4AE40L02UIWEGOOIVWJW3FS1VCAPR'
 });
 
+const params = {
+    "ll": "-36.798376, 174.73672",
+    "query": 'Home'
+};
+
 export class MapContainer extends Component {
     constructor(props){
         super(props);
@@ -15,29 +20,44 @@ export class MapContainer extends Component {
             activeMaker: {},
             selectedPlace: null,
             map: null,
-            apiData: null
+            items: null,
+            // InfoWindowContent:null
         }
     }
 
-    //re-rendering
-    // componentWillReceiveProps(nextProps) {
-        
-    // }
-
-    //fetch apiData when component adding to DOM
-    componentDidMount() {
-        foursquare.venues.getVenues(this.props.places)
-            .then(res => {
-                this.setState({ apiData: res.response.venues });
-            });
+    // re-rendering 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.selectedPlace !== this.props.selectedPlace) {
+            const markers = this.refs;//DOM nodes
+            const marker = markers[nextProps.selectedPlace.name].marker;
+            this.animateMarker(marker,this.state.map);
+            this.setState({
+                showingInfoWindow: true,
+                selectedPlace: nextProps.selectedPlace,
+                activeMaker: marker
+            })
+        }
     }
+
+    //fetch items when component adding to DOM
+    // componentDidMount() {
+    //     foursquare.venues.getVenues(selectedPlace)
+    //         .then(res => {
+    //             this.setState({ items: res.response.venues });
+    //         }).catch(error =>console.log('Error',error)
+    //         );
+    // }
 
     onMarkerClick = (props, marker, e) => {
         this.animateMarker(marker,props.map);
+
+        foursquare.venues.getVenues(props);
+
         this.setState({
             selectedPlace: props,
             activeMaker: marker,
-            showingInfoWindow: true
+            showingInfoWindow: true,
+            items: props
         });
     }
 
@@ -97,10 +117,8 @@ export class MapContainer extends Component {
             >
             <div>
                 <h1>{selectedPlace ? selectedPlace.name :''}</h1>
-                <p>{this.state.apiData ? 
-                    this.state.apiData.map(place => {
-                        return <div key={place.id}>{place.name}</div>
-                    }) :
+                <p>{this.state.items ? 
+                    this.state.items:
                      'Loading...'}</p>
             </div>
             </InfoWindow>
@@ -110,5 +128,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-    akiKey: 'AIzaSyCfdB53Ke2w9uJRVoxmj0HNrzVa0WNW84o'
+    apiKey: 'AIzaSyCfdB53Ke2w9uJRVoxmj0HNrzVa0WNW84o'
 })(MapContainer);
