@@ -6,17 +6,6 @@ const foursquare = require('react-foursquare')({
     clientID: 'HNWME22DACZBRE3XCHEPDICRSCBQWCN4LSK3FRPO0VHEFFED',
     clientSecret: '0DUHNOBRKVA0AW0PHJK4AE40L02UIWEGOOIVWJW3FS1VCAPR'
 });
-// let placeData = props;
-// const ll = placeData.location.lat + ',' + placeData.location.lng;
-
-// const params = {
-//     "ll": ll,
-//     "query": placeData.name
-// };
-const params = {
-    "ll": "37.7749,-122.4194",
-    "query": 'Blue Bottle'
-};
 
 export class MapContainer extends Component {
     constructor(props){
@@ -31,13 +20,13 @@ export class MapContainer extends Component {
         }
     }
 
-
     // re-rendering 
     UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.selectedPlace !== this.props.selectedPlace) {
             const markers = this.refs;//DOM nodes
             const marker = markers[nextProps.selectedPlace.name].marker;
             this.animateMarker(marker,this.state.map);
+            this.fetchFoursquare(`${marker.getPosition().lat()},${marker.getPosition().lng()}`);
             this.setState({
                 showingInfoWindow: true,
                 selectedPlace: nextProps.selectedPlace,
@@ -45,21 +34,31 @@ export class MapContainer extends Component {
             })
         }
     }
+ 
+    fetchFoursquare(location) {
 
-    //fetch items when component adding to DOM
-    componentDidMount() {
+        const params = {
+            "ll": location,
+            "query": 'Blue Bottle'
+        };
 
         foursquare.venues.getVenues(params)
             .then(res => {
-                console.log(res) ;
-                this.setState({ items: res.response.venues });
-            }).catch(error =>console.log('Error',error)
+                console.log(res);
+
+                let data = res.response.venues[0]
+                this.setState({ items: [data] });
+
+                // this.setState({ items: res.response.venues });
+            }).catch(error => alert('Error', error)
             );
     }
 
     onMarkerClick = (props, marker, e) => {
         this.animateMarker(marker,props.map);
-        
+
+        this.fetchFoursquare(`${marker.getPosition().lat()},${marker.getPosition().lng()}`);
+
         this.setState({
             selectedPlace: props,
             activeMaker: marker,
@@ -126,7 +125,11 @@ export class MapContainer extends Component {
                 <h1>{selectedPlace ? selectedPlace.name :''}</h1>
                 <p>{this.state.items ? 
                     this.state.items.map(item => {
-                        return <div key={item.id}>{[item.name, item.id]}</div> 
+                                return <div key={item.id}>
+                                    <p>Blue Bottle around here:</p>
+                                    <p>{item.name}</p>
+                                    <p>{item.location.address && item.location.address}</p>
+                                </div> 
                     }):
                      'Loading...'}</p>
             </div>
