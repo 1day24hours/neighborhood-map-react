@@ -21,3 +21,16 @@
 .search-list li:hover {
   background: bisque;
 }
+
+@media (max-width: 576px) { 
+
+  .search-list li{
+        font-size: x-small;
+        padding-left: 3px;
+        padding-right: 3px;
+        margin: auto;
+  }
+   .search-input input{
+        max-width: 60px;
+    }
+ }
