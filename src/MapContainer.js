@@ -7,6 +7,14 @@ const foursquare = require('react-foursquare')({
     clientSecret: '0DUHNOBRKVA0AW0PHJK4AE40L02UIWEGOOIVWJW3FS1VCAPR'
 });
 
+// let placeData = props;
+// const ll = placeData.location.lat + ',' + placeData.location.lng;
+
+// const params = {
+//     "ll": ll,
+//     "query": placeData.name
+// };
+
 export class MapContainer extends Component {
     constructor(props){
         super(props);
@@ -39,7 +47,7 @@ export class MapContainer extends Component {
 
         const params = {
             "ll": location,
-            "query": 'Blue Bottle'
+            "query": location.address
         };
 
         foursquare.venues.getVenues(params)
@@ -126,8 +134,8 @@ export class MapContainer extends Component {
                 <p>{this.state.items ? 
                     this.state.items.map(item => {
                                 return <div key={item.id}>
-                                    <p>Blue Bottle around here:</p>
-                                    <p>{item.name}</p>
+                                    {/* <p>Blue Bottle around here:</p> */}
+                                    <p>{item.name} around here</p>
                                     <p>{item.location.address && item.location.address}</p>
                                 </div> 
                     }):
