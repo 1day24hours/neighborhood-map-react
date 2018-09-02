@@ -10,6 +10,8 @@ Included is a list of some places in Auckland, New Zealand, there are so many pl
 
 The app allows you to filter the list down as you type. In return, it displays the locations on the map.
 
+![NeighborhoodMap](https://github.com/1day24hours/neighborhood-map-react/blob/master/gif/neighborhood-map.gif)
+
 ## Features
 
 1. Click on any marker to see the location details fetched from the [FourSquare APIs](https://developer.foursquare.com/).
